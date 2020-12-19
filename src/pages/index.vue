@@ -1,11 +1,11 @@
 <template lang="pug">
 .index
   h1 商品一覧
-    .container(v-for="product in products")
-      img.productImage(:src="product.image")
-      .productName {{product.name}}
-      .productPrice ￥{{product.price}}-
-      .productDescription {{product.description}}
+  .container(v-for="product in products")
+    img.productImage(:src="product.image")
+    .productName {{product.name}}
+    .productPrice ￥{{product.price}}-
+    .productDescription {{product.description}}
 </template>
 
 <script lang="ts">
