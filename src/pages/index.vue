@@ -14,7 +14,7 @@ import { ProductState } from '@/store/types'
 
 @Component({})
 export default class Default extends Vue {
-  public products: ProductState = this.$store.state.products
+  public products: ProductState = this.$store.getters['Product/products']
 }
 </script>
 
