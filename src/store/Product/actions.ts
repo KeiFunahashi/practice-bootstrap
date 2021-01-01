@@ -6,8 +6,12 @@ import { ProductState, RootState } from '@/store/types'
  */
 const actions: ActionTree<ProductState, RootState> = {
   add({ commit }, product: any) {
-    console.log('-----------------actions-----------------')
+    console.log('-----------------actions(add)-----------------')
     commit('add', product.data)
+  },
+  edit({ commit }, product: any) {
+    console.log('-----------------actions(edit)-----------------')
+    commit('edit', product.data)
   },
 }
 
