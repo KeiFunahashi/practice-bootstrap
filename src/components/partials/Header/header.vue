@@ -8,8 +8,6 @@
       span 商品一覧
     nuxt-link(to="new")
       span 新規作成
-    nuxt-link(to="search")
-      span 商品検索
     nuxt-link(to="token")
       span トークン認証
   .user ユーザー情報
