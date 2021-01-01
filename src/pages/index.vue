@@ -5,11 +5,15 @@
     .searchForm
       .productName
         input(v-model="name", type="text", placeholder="商品名",required)
-    .searchResult(v-for="product in searchProducts")
-      img.productImage(:src="product.image")
-      .productName {{product.name}}
-      .productPrice ￥{{product.price}}-
-      .productDescription {{product.description}}
+    .searchResults
+      .searchResult(v-for="product in searchProducts")
+        nuxt-link(:to="`/detail/${product.id}`")
+          .productImage
+            img(:src="product.image" height="462" width="519")
+          .productId {{product.id}}
+          .productName {{product.name}}
+          .productPrice ￥{{product.price}}-
+          .productDescription {{product.description}}
 </template>
 
 <script lang="ts">
@@ -32,5 +36,15 @@ export default class Default extends Vue {
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+.searchResults {
+  margin: 50px 0;
+  a {
+    text-decoration: none;
+  }
+  .productImage img {
+    object-fit: contain;
+  }
 }
 </style>
