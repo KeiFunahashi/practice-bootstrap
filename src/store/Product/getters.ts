@@ -6,7 +6,7 @@ import { ProductState, RootState } from '@/store/types'
  */
 const getters: GetterTree<ProductState, RootState> = {
   products: (state: ProductState) => {
-    return state.products
+    return state.products.reverse()
   },
   productsLength: (state: ProductState) => {
     return state.products.length
