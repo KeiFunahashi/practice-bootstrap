@@ -10,7 +10,6 @@
         nuxt-link(:to="`/detail/${product.id}`")
           .productImage
             img(:src="product.image" height="462" width="519")
-          .productId {{product.id}}
           .productName {{product.name}}
           .productPrice ￥{{product.price}}-
           .productDescription {{product.description}}
