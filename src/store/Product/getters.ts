@@ -5,8 +5,10 @@ import { ProductState, RootState } from '@/store/types'
  * getters
  */
 const getters: GetterTree<ProductState, RootState> = {
-  products: (state: ProductState) => {
-    return state.products.reverse()
+  searchProducts: (state: ProductState) => (searchWord: any) => {
+    return state.products
+      .filter((product) => product.name.includes(searchWord))
+      .reverse()
   },
   productsLength: (state: ProductState) => {
     return state.products.length
