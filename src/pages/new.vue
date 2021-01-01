@@ -17,9 +17,6 @@
           input(v-model="image", type="text", placeholder="商品画像URL", required)
       nuxt-link(to="/")
         button.product-submit(type="submit", @click="handleSubmit") 送信
-  p {{title}}
-  p {{price}}
-  p {{description}}
 </template>
 
 <script lang="ts">
