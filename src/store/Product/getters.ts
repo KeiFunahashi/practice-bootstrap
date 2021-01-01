@@ -13,6 +13,9 @@ const getters: GetterTree<ProductState, RootState> = {
   productsLength: (state: ProductState) => {
     return state.products.length
   },
+  productDetail: (state: ProductState) => (productId: number) => {
+    return state.products.filter((product) => product.id === productId)[0]
+  },
 }
 
 export default getters
