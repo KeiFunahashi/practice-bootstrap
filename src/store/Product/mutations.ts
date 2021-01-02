@@ -19,6 +19,13 @@ const mutations: MutationTree<ProductState> = {
     console.log('現在のstate', state)
     alert('商品が編集されました')
   },
+  delete: (state, productId: number) => {
+    console.log('-----------------mutations(delete)-----------------')
+    console.log('商品ID', productId)
+    state.products.splice(productId - 1, 1)
+    console.log('現在のstate', state)
+    alert('商品が削除されました')
+  },
 }
 
 export default mutations

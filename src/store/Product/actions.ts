@@ -13,6 +13,10 @@ const actions: ActionTree<ProductState, RootState> = {
     console.log('-----------------actions(edit)-----------------')
     commit('edit', product.data)
   },
+  delete({ commit }, productId: number) {
+    console.log('-----------------actions(delete)-----------------')
+    commit('delete', productId)
+  },
 }
 
 export default actions
