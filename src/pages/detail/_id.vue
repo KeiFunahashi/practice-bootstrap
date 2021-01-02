@@ -3,7 +3,8 @@
   h1 商品詳細
   .container
     .productDetail
-      img.productImage(:src="product.image")
+      .productImage
+        img(:src="product.image" height="462" width="519")
       .productName {{product.name}}
       .productPrice ￥{{product.price}}-
       .productDescription {{product.description}}
@@ -48,5 +49,8 @@ export default class Default extends Vue {
 }
 button {
   margin: 5px 10px;
+}
+.productImage img {
+  object-fit: contain;
 }
 </style>
