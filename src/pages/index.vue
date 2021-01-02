@@ -4,13 +4,13 @@
   .container
     .searchForm
       .productName
-        input(v-model="name", type="text", placeholder="商品名",required)
+        input(v-model="title", type="text", placeholder="商品名",required)
     .searchResults
       .searchResult(v-for="product in searchProducts")
         nuxt-link(:to="`/detail/${product.id}`")
           .productImage
             img(:src="product.image" height="462" width="519")
-          .productName {{product.name}}
+          .productName {{product.title}}
           .productPrice ￥{{product.price}}-
           .productDescription {{product.description}}
 </template>
@@ -20,10 +20,10 @@ import { Vue, Component } from 'nuxt-property-decorator'
 
 @Component({})
 export default class Default extends Vue {
-  public name: string = ''
+  public title: string = ''
 
   get searchProducts() {
-    return this.$store.getters['Product/searchProducts'](this.name)
+    return this.$store.getters['Product/searchProducts'](this.title)
   }
 }
 </script>

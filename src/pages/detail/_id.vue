@@ -5,7 +5,7 @@
     .productDetail
       .productImage
         img(:src="product.image" height="462" width="519")
-      .productName {{product.name}}
+      .productName {{product.title}}
       .productPrice ￥{{product.price}}-
       .productDescription {{product.description}}
     nuxt-link(:to="`/edit/${this.$route.params.id}`")
@@ -19,7 +19,7 @@ import { Vue, Component } from 'nuxt-property-decorator'
 
 @Component({})
 export default class Default extends Vue {
-  product: ProductState = this.$store.getters['Product/productDetail'](
+  public product: ProductState = this.$store.getters['Product/productDetail'](
     Number(this.$route.params.id)
   )
 

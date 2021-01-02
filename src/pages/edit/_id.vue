@@ -5,7 +5,7 @@
     form
       .productName
         label 商品：
-          input(v-model="name", type="text", placeholder=`${name}`,required)
+          input(v-model="title", type="text", placeholder=`${title}`,required)
       .productPrice
         label 値段：
           input(v-model="price", type="text", placeholder=`${price}`, required)
@@ -30,13 +30,13 @@ export default class Default extends Vue {
   )
 
   public productId: number = this.product.id
-  public name: string = this.product.name
+  public title: string = this.product.title
   public price: number = this.product.price
   public description: string = this.product.description
   public image: string = this.product.image
 
   mounted() {
-    console.log(this.product.name)
+    console.log(this.product.title)
   }
 
   async handleSubmit() {
@@ -46,7 +46,7 @@ export default class Default extends Vue {
         {
           data: {
             id: this.productId,
-            name: this.name,
+            title: this.title,
             price: Number(this.price),
             description: this.description,
             image: this.image,
