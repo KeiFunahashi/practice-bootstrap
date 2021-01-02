@@ -5,7 +5,7 @@
     form
       .productName
         label 商品：
-          input(v-model="name", type="text", placeholder="商品名",required)
+          input(v-model="title", type="text", placeholder="商品名",required)
       .productPrice
         label 値段：
           input(v-model="price", type="text", placeholder="値段", required)
@@ -24,7 +24,7 @@ import { Vue, Component } from 'nuxt-property-decorator'
 
 @Component({})
 export default class Default extends Vue {
-  public name: string = ''
+  public title: string = ''
   public price: number | undefined
   public description: string = ''
   public image: string = ''
@@ -37,7 +37,7 @@ export default class Default extends Vue {
         {
           data: {
             id: this.productsLength + 1,
-            name: this.name,
+            title: this.title,
             price: Number(this.price),
             description: this.description,
             image: this.image,
