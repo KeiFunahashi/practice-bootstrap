@@ -25,20 +25,19 @@ import { Vue, Component } from 'nuxt-property-decorator'
 
 @Component({})
 export default class Default extends Vue {
+  // 商品情報
   public product: Product = this.$store.getters['Product/productDetail'](
     Number(this.$route.params.id)
   )
 
+  // フォームの値
   public productId: number = this.product.id
   public title: string = this.product.title
   public price: number = this.product.price
   public description: string = this.product.description
   public image: string = this.product.image
 
-  mounted() {
-    console.log(this.product.title)
-  }
-
+  // 商品編集メソッド
   async handleSubmit() {
     try {
       await this.$store.dispatch(
@@ -49,7 +48,6 @@ export default class Default extends Vue {
             title: this.title,
             price: Number(this.price),
             description: this.description,
-            image: this.image,
           },
         },
         { root: true }

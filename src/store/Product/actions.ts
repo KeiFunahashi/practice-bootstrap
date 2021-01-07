@@ -1,4 +1,4 @@
-const PRODUCTS_API_URL = 'http://localhost:8080/api/products'
+const PRODUCTS_API_URL = 'http://localhost:8080/api/products/'
 /**
  * actions
  */
@@ -34,6 +34,7 @@ const actions = {
           Authorization: `Bearer ${token}`,
         },
       })
+      alert('商品を追加しました')
     } catch (e) {
       alert('失敗しました')
       console.log('失敗', e)
@@ -43,17 +44,40 @@ const actions = {
   /**
    * 商品編集
    */
-  edit({ commit }: any, product: any) {
+  async edit(this: any, { commit }: any, product: any) {
     console.log('-----------------actions(edit)-----------------')
-    commit('edit', product.data)
+
+    try {
+      const token = this.$cookies.get('ApiToken')
+      await this.$axios.$put(PRODUCTS_API_URL + product.data.id, product.data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      alert('商品を編集しました')
+    } catch (e) {
+      alert('失敗しました')
+      console.log('失敗', e)
+    }
   },
 
   /**
    * 商品削除
    */
-  delete({ commit }: any, productId: number) {
+  async delete(this: any, { commit }: any, productId: number) {
     console.log('-----------------actions(delete)-----------------')
-    commit('delete', productId)
+    try {
+      const token = this.$cookies.get('ApiToken')
+      await this.$axios.$delete(PRODUCTS_API_URL + productId, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      alert('商品を削除しました')
+    } catch (e) {
+      alert('失敗しました')
+      console.log('失敗', e)
+    }
   },
 }
 

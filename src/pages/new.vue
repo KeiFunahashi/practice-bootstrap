@@ -24,12 +24,14 @@ import { Vue, Component } from 'nuxt-property-decorator'
 
 @Component({})
 export default class Default extends Vue {
+  // フォームの値
   public title: string = ''
   public price: number | undefined
   public description: string = ''
   public image: string = ''
   public productsLength: number = this.$store.getters['Product/productsLength']
 
+  // 商品作成メソッド
   async handleSubmit() {
     try {
       await this.$store.dispatch(
