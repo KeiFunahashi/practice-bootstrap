@@ -1,19 +1,47 @@
-import { ActionTree } from 'vuex'
-import { ProductState, RootState } from '@/store/types'
-
+const GET_PRODUCTS_URL = 'http://localhost:8080/api/products'
 /**
  * actions
  */
-const actions: ActionTree<ProductState, RootState> = {
-  add({ commit }, product: any) {
+const actions = {
+  /**
+   * 商品取得
+   */
+  async index(this: any, { commit }: any) {
+    console.log('-----------------actions(index)-----------------')
+    try {
+      const token = this.$cookies.get('ApiToken')
+      const res = await this.$axios.$get(GET_PRODUCTS_URL, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      commit('index', res)
+    } catch (e) {
+      alert('認証できませんでした')
+      console.log('失敗', e)
+    }
+  },
+
+  /**
+   * 商品追加
+   */
+  add({ commit }: any, product: any) {
     console.log('-----------------actions(add)-----------------')
     commit('add', product.data)
   },
-  edit({ commit }, product: any) {
+
+  /**
+   * 商品編集
+   */
+  edit({ commit }: any, product: any) {
     console.log('-----------------actions(edit)-----------------')
     commit('edit', product.data)
   },
-  delete({ commit }, productId: number) {
+
+  /**
+   * 商品削除
+   */
+  delete({ commit }: any, productId: number) {
     console.log('-----------------actions(delete)-----------------')
     commit('delete', productId)
   },

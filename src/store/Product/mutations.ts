@@ -5,6 +5,20 @@ import { ProductState, Product } from '@/store/types'
  * mutations
  */
 const mutations: MutationTree<ProductState> = {
+  /**
+   * 商品取得
+   */
+  index: (state, product: Product[]) => {
+    console.log('-----------------mutations(index)-----------------')
+    console.log('商品情報', product)
+    console.log('現在のstate', state.products)
+    state.products = product
+    console.log('追加後のstate', state.products)
+  },
+
+  /**
+   * 商品追加
+   */
   add: (state, product: Product) => {
     console.log('-----------------mutations(add)-----------------')
     console.log('商品情報', product)
@@ -12,6 +26,10 @@ const mutations: MutationTree<ProductState> = {
     console.log('現在のstate', state)
     alert('商品が追加されました')
   },
+
+  /**
+   * 商品編集
+   */
   edit: (state, product: Product) => {
     console.log('-----------------mutations(edit)-----------------')
     console.log('商品情報', product)
@@ -19,6 +37,10 @@ const mutations: MutationTree<ProductState> = {
     console.log('現在のstate', state)
     alert('商品が編集されました')
   },
+
+  /**
+   * 商品削除
+   */
   delete: (state, productId: number) => {
     console.log('-----------------mutations(delete)-----------------')
     console.log('商品ID', productId)
