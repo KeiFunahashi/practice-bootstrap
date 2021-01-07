@@ -1,4 +1,4 @@
-const GET_PRODUCTS_URL = 'http://localhost:8080/api/products'
+const PRODUCTS_API_URL = 'http://localhost:8080/api/products'
 /**
  * actions
  */
@@ -10,14 +10,14 @@ const actions = {
     console.log('-----------------actions(index)-----------------')
     try {
       const token = this.$cookies.get('ApiToken')
-      const res = await this.$axios.$get(GET_PRODUCTS_URL, {
+      const res = await this.$axios.$get(PRODUCTS_API_URL, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       commit('index', res)
     } catch (e) {
-      alert('認証できませんでした')
+      alert('失敗しました')
       console.log('失敗', e)
     }
   },
@@ -25,9 +25,19 @@ const actions = {
   /**
    * 商品追加
    */
-  add({ commit }: any, product: any) {
+  async add(this: any, { commit }: any, product: any) {
     console.log('-----------------actions(add)-----------------')
-    commit('add', product.data)
+    try {
+      const token = this.$cookies.get('ApiToken')
+      await this.$axios.$post(PRODUCTS_API_URL, product.data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    } catch (e) {
+      alert('失敗しました')
+      console.log('失敗', e)
+    }
   },
 
   /**

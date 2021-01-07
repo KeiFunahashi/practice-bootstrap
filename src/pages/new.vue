@@ -36,11 +36,9 @@ export default class Default extends Vue {
         'Product/add',
         {
           data: {
-            id: this.productsLength + 1,
             title: this.title,
             price: Number(this.price),
             description: this.description,
-            image: this.image,
           },
         },
         { root: true }

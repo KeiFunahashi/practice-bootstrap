@@ -17,17 +17,6 @@ const mutations: MutationTree<ProductState> = {
   },
 
   /**
-   * 商品追加
-   */
-  add: (state, product: Product) => {
-    console.log('-----------------mutations(add)-----------------')
-    console.log('商品情報', product)
-    state.products.push(product)
-    console.log('現在のstate', state)
-    alert('商品が追加されました')
-  },
-
-  /**
    * 商品編集
    */
   edit: (state, product: Product) => {
