@@ -1,8 +1,8 @@
 <template lang="pug">
 .app
-    Header
-    .main
-     Nuxt
+  Header
+  body.main
+    Nuxt
 </template>
 
 <script lang="ts">
@@ -31,6 +31,10 @@ html {
 }
 body {
   margin: 0;
+  a {
+    color: rgb(41, 41, 41);
+    text-decoration: none;
+  }
 }
 
 *,
