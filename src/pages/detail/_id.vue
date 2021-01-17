@@ -2,42 +2,86 @@
 .search
   h1 商品詳細
   .container
-    .productDetail
-      .productImage
-        img(:src="product.image" height="462" width="519")
-      .productName {{product.title}}
-      .productPrice ￥{{product.price}}-
-      .productDescription {{product.description}}
-    nuxt-link(:to="`/edit/${this.$route.params.id}`")
+    Detail(:product="product")
+    nuxt-link(:to="`/edit/${this.$route.params.id}`").editBtn
       button 編集
-    button(@click="handleDelete") 削除
+    button(@click="handleDelete").deleteBtn 削除
 </template>
 
 <script lang="ts">
-import { ProductState } from '@/store/types'
 import { Vue, Component } from 'nuxt-property-decorator'
+import Detail from '@/components/partials/Product/detail.vue'
+import { Context } from '@nuxt/types'
 
-@Component({})
+@Component({
+  components: {
+    Detail,
+  },
+})
 export default class Default extends Vue {
-  public product: ProductState = this.$store.getters['Product/productDetail'](
-    Number(this.$route.params.id)
-  )
+  // ----------Data----------
+  /** 商品情報 */
+  public get product() {
+    return this!.$store.getters['Product/productDetail']
+  }
 
-  async handleDelete() {
+  // ----------メソッド----------
+  /** 商品削除メソッド */
+  public async handleDelete() {
     if (confirm('削除しますか？')) {
       try {
         await this.$store.dispatch(
           'Product/delete',
-          Number(this.$route.params.id),
+          {
+            productId: Number(this.$route.params.id),
+          },
           { root: true }
         )
+        this.$router.push('/')
       } catch (e) {
-        console.log('登録失敗', e)
-        alert('登録できませんでした')
+        const errorRes = e.response
+        if (errorRes.status === 400) {
+          this.$nuxt.error({
+            statusCode: 400,
+            message: errorRes.data.Error.Message,
+          })
+        } else if (errorRes.status === 401) {
+          alert('認証できませんでした。ログイン画面に進みます。')
+          window.location.href = this.$store.$C.ENDPOINT.API_ENDPOINT
+        } else {
+          this.$nuxt.error({ statusCode: 500, message: 'システムエラーです' })
+        }
       }
-      this.$router.push('/')
     } else {
       // 何もしない
+    }
+  }
+
+  // ----------ライフサイクル----------
+  /** asyncData */
+  public async asyncData(context: Context) {
+    // context
+    const { store, route, error } = context
+
+    // 商品詳細取得
+    try {
+      await store.dispatch(
+        'Product/detail',
+        { productId: Number(route.params.id) },
+        {
+          root: true,
+        }
+      )
+    } catch (e) {
+      const errorRes = e.response
+      if (errorRes.status === 400) {
+        error({ statusCode: 400, message: errorRes.data.Error.Message })
+      } else if (errorRes.status === 401) {
+        alert('認証できませんでした。ログイン画面に進みます。')
+        window.location.href = context.$C.ENDPOINT.API_ENDPOINT
+      } else {
+        error({ statusCode: 500, message: 'システムエラーです' })
+      }
     }
   }
 }
@@ -52,5 +96,21 @@ button {
 }
 .productImage img {
   object-fit: contain;
+}
+button {
+  margin-top: 20px;
+  padding: 7px 115px;
+  border: none;
+  font-size: 15px;
+  font-weight: bold;
+}
+.editBtn {
+  button {
+    color: #3b3b3b;
+  }
+}
+.deleteBtn {
+  color: #fff;
+  background-color: #ea352d;
 }
 </style>
