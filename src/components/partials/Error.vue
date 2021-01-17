@@ -1,6 +1,6 @@
 <template lang="pug">
 .error
-  .tirle {{title}}
+  .title {{title}}
   .message {{message}}
 </template>
 <script lang="ts">
