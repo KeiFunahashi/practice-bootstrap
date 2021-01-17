@@ -1,82 +1,123 @@
-const PRODUCTS_API_URL = 'http://localhost:8080/api/products/'
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * actions
  */
 const actions = {
   /**
-   * 商品取得
+   * 商品一覧取得
    */
-  async index(this: any, { commit }: any) {
+  async index(this: any, { commit }: any): Promise<void> {
     console.log('-----------------actions(index)-----------------')
     try {
       const token = this.$cookies.get('ApiToken')
-      const res = await this.$axios.$get(PRODUCTS_API_URL, {
+      const res = await this.$axios.$get(this.$C.ENDPOINT.PRODUCTS_API_URL, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       commit('index', res)
     } catch (e) {
-      alert('失敗しました')
-      console.log('失敗', e)
+      if (!e) {
+        return
+      }
+      throw e
+    }
+  },
+  /**
+   * 商品詳細取得
+   */
+  async detail(this: any, { commit }: any, payload: any): Promise<void> {
+    const { productId } = payload
+    console.log('payload', payload)
+    console.log('-----------------actions(detail)-----------------')
+    try {
+      const token = this.$cookies.get('ApiToken')
+      const productDetail = await this.$axios.$get(
+        this.$C.ENDPOINT.PRODUCTS_API_URL + productId,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      commit('detail', productDetail)
+    } catch (e) {
+      if (!e) {
+        return
+      }
+      throw e
     }
   },
 
   /**
    * 商品追加
    */
-  async add(this: any, { commit }: any, product: any) {
-    console.log('-----------------actions(add)-----------------')
+  async create(this: any, { commit }: any, payload: any): Promise<void> {
+    const { data } = payload
+    console.log('-----------------actions(create)-----------------')
     try {
       const token = this.$cookies.get('ApiToken')
-      await this.$axios.$post(PRODUCTS_API_URL, product.data, {
+      await this.$axios.$post(this.$C.ENDPOINT.PRODUCTS_API_URL, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       alert('商品を追加しました')
     } catch (e) {
-      alert('失敗しました')
-      console.log('失敗', e)
+      if (!e) {
+        return
+      }
+      throw e
     }
   },
 
   /**
    * 商品編集
    */
-  async edit(this: any, { commit }: any, product: any) {
+  async edit(this: any, { commit }: any, payload: any): Promise<void> {
+    const { productId, data } = payload
+
     console.log('-----------------actions(edit)-----------------')
 
     try {
       const token = this.$cookies.get('ApiToken')
-      await this.$axios.$put(PRODUCTS_API_URL + product.data.id, product.data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      await this.$axios.$put(
+        this.$C.ENDPOINT.PRODUCTS_API_URL + productId,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       alert('商品を編集しました')
     } catch (e) {
-      alert('失敗しました')
-      console.log('失敗', e)
+      if (!e) {
+        return
+      }
+      throw e
     }
   },
 
   /**
    * 商品削除
    */
-  async delete(this: any, { commit }: any, productId: number) {
+  async delete(this: any, { commit }: any, payload: any): Promise<void> {
+    const { productId } = payload
     console.log('-----------------actions(delete)-----------------')
     try {
       const token = this.$cookies.get('ApiToken')
-      await this.$axios.$delete(PRODUCTS_API_URL + productId, {
+      await this.$axios.$delete(this.$C.ENDPOINT.PRODUCTS_API_URL + productId, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       alert('商品を削除しました')
     } catch (e) {
-      alert('失敗しました')
-      console.log('失敗', e)
+      if (!e) {
+        return
+      }
+      throw e
     }
   },
 }
