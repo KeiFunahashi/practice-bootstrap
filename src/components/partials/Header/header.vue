@@ -3,16 +3,14 @@
   .appName
     nuxt-link(to="/")
       h1 商品登録
-  .content
-    nuxt-link(to="/")
-      span 商品一覧
-    nuxt-link(to="/new")
-      span 新規作成
-    nuxt-link(to="/token")
-      span トークン認証
   .user ユーザー情報
 </template>
-<script lang="ts"></script>
+<script lang="ts">
+import { Vue, Component } from 'nuxt-property-decorator'
+
+@Component({})
+export default class Default extends Vue {}
+</script>
 <style>
 .appName a {
   text-decoration: none;
