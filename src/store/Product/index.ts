@@ -5,8 +5,9 @@ import actions from './actions'
 import mutations from './mutations'
 
 /** state */
-export const state: ProductState = {
+export const state: any = {
   products: [],
+  productDetail: null,
 }
 
 export const products: Module<ProductState, RootState> = {
