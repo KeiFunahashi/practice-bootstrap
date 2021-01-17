@@ -3,6 +3,7 @@ export interface RootState {
 }
 
 export interface ProductState {
+  productDetail: Product
   products: Product[]
 }
 
