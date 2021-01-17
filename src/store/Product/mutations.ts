@@ -17,25 +17,14 @@ const mutations: MutationTree<ProductState> = {
   },
 
   /**
-   * 商品編集
+   * 商品詳細
    */
-  edit: (state, product: Product) => {
-    console.log('-----------------mutations(edit)-----------------')
+  detail: (state, product: Product) => {
+    console.log('-----------------mutations(detail)-----------------')
     console.log('商品情報', product)
-    state.products.splice(product.id - 1, 1, product)
     console.log('現在のstate', state)
-    alert('商品が編集されました')
-  },
-
-  /**
-   * 商品削除
-   */
-  delete: (state, productId: number) => {
-    console.log('-----------------mutations(delete)-----------------')
-    console.log('商品ID', productId)
-    state.products.splice(productId - 1, 1)
-    console.log('現在のstate', state)
-    alert('商品が削除されました')
+    state.productDetail = product
+    console.log('追加後のstate', state)
   },
 }
 
