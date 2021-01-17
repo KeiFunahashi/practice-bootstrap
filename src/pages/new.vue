@@ -2,52 +2,61 @@
 .new
   h1 新規作成
   .container
-    form
-      .productName
-        label 商品：
-          input(v-model="title", type="text", placeholder="商品名",required)
-      .productPrice
-        label 値段：
-          input(v-model="price", type="text", placeholder="値段", required)
-      .productDescription
-        label 説明：
-          input(v-model="description", type="text", placeholder="商品説明", maxLength="500", required)
-      .productImage
-        label 画像：
-          input(v-model="image", type="text", placeholder="商品画像URL", required)
-      nuxt-link(to="/")
-        button.product-submit(type="submit", @click="handleSubmit") 送信
+    Form(:formValue="formValue")
+    button.product-submit(type="submit", @click="handleSubmit") 送信
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
+import Form from '@/components/partials/Form/form.vue'
 
-@Component({})
+@Component({
+  components: {
+    Form,
+  },
+})
 export default class Default extends Vue {
-  // フォームの値
-  public title: string = ''
-  public price: number | undefined
-  public description: string = ''
-  public image: string = ''
+  // -----------Data-----------
+  /** 商品数 */
   public productsLength: number = this.$store.getters['Product/productsLength']
+
+  // フォームの値
+  public formValue = {
+    /** 商品名 */
+    title: '',
+    /** 値段 */
+    price: '',
+    /** 商品説明 */
+    description: '',
+  }
 
   // 商品作成メソッド
   async handleSubmit() {
     try {
       await this.$store.dispatch(
-        'Product/add',
+        'Product/create',
         {
           data: {
-            title: this.title,
-            price: Number(this.price),
-            description: this.description,
+            id: null,
+            title: this.formValue.title,
+            price: Number(this.formValue.price),
+            description: this.formValue.description,
+            image: null,
           },
         },
         { root: true }
       )
+      this.$router.push('/')
     } catch (e) {
-      console.log('登録失敗', e)
-      alert('登録できませんでした')
+      const errorRes = e.response
+      if (errorRes.status === 400) {
+        alert(errorRes.data.Error.Message)
+      } else if (errorRes.status === 401) {
+        alert('認証できませんでした。ログイン画面に進みます。')
+        window.location.href = this.$store.$C.ENDPOINT.API_ENDPOINT
+      } else {
+        this.$nuxt.error({ statusCode: 500, message: 'システムエラーです' })
+      }
     }
   }
 }
@@ -55,11 +64,15 @@ export default class Default extends Vue {
 
 <style lang="scss" scoped>
 .container {
-  margin: 0 auto;
-  line-height: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   text-align: center;
+
+  button {
+    padding: 7px 115px;
+    border: none;
+    background-color: #ea352d;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+  }
 }
 </style>
