@@ -11,8 +11,8 @@
       .searchResult(v-for="product in searchProducts")
         nuxt-link(:to="`/detail/${product.id}`")
           .productImage
-            img(v-if="product.image" :src="product.image" height="462" width="519")
-            img(v-else src="https://jmva.or.jp/wp-content/uploads/2018/07/noimage.png" height="462" width="519")
+            img(v-if="product.imagePath" :src="`${apiUrl}${product.imagePath}`" height="462" width="519")
+            img(v-else :src="noImage" height="462" width="519")
           table
             tr
               td.productNameTitle 商品：
@@ -32,6 +32,13 @@ import { Vue, Component } from 'nuxt-property-decorator'
 @Component({})
 export default class Default extends Vue {
   // -----------Data-----------
+  /** apiのURL(画像表示に使用) */
+  public apiUrl: string = this.$C.ENDPOINT.PRODUCTS_API_URL
+
+  /** noImage */
+  public noImage: string =
+    'https://jmva.or.jp/wp-content/uploads/2018/07/noimage.png'
+
   /** 検索ワード */
   public title: string = ''
   $C: any
