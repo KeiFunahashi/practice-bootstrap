@@ -17,8 +17,6 @@ import Form from '@/components/partials/Form/form.vue'
 })
 export default class Default extends Vue {
   // -----------Data-----------
-  /** 商品数 */
-  public productsLength: number = this.$store.getters['Product/productsLength']
 
   // フォームの値
   public formValue = {
