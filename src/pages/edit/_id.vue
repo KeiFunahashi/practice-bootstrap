@@ -2,6 +2,8 @@
 .new
   h1 商品編集
   .container
+    .productImage
+      input( type="file", accept="image/png,image/jpeg,image/gif", @change="uploadImage" ,required)
     Form(:formValue="formValue")
     button.product-submit(type="submit", @click="handleSubmit") 送信
 </template>
@@ -35,9 +37,21 @@ export default class Default extends Vue {
     price: this.product.price,
     /** 商品説明 */
     description: this.product.description,
+
+    /** 画像 */
+    imageData: new FormData(),
   }
 
   // メソッド
+  uploadImage(e: any): void {
+    e.preventDefault()
+    if (e.target.files.length === 0) {
+      // 画像が存在しない場合
+      alert('画像が存在しません')
+    }
+    this.formValue.imageData.append('productImage', e.target.files[0])
+  }
+
   /** 商品編集メソッド */
   async handleSubmit() {
     try {
@@ -52,6 +66,7 @@ export default class Default extends Vue {
             description: this.formValue.description,
             image: null,
           },
+          imageData: this.formValue.imageData,
         },
         { root: true }
       )

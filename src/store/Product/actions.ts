@@ -75,7 +75,7 @@ const actions = {
    * 商品編集
    */
   async edit(this: any, { commit }: any, payload: any): Promise<void> {
-    const { productId, data } = payload
+    const { productId, data, imageData } = payload
 
     console.log('-----------------actions(edit)-----------------')
 
@@ -90,6 +90,18 @@ const actions = {
           },
         }
       )
+      if (imageData.get('productImage')) {
+        // 画像が追加される場合
+        await this.$axios.$patch(
+          this.$C.ENDPOINT.PRODUCTS_API_URL + productId + '/images',
+          imageData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+      }
       alert('商品を編集しました')
     } catch (e) {
       if (!e) {
