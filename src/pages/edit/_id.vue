@@ -3,7 +3,9 @@
   h1 商品編集
   .container
     .productImage
-      input( type="file", accept="image/png,image/jpeg,image/gif", @change="uploadImage" ,required)
+      label(for="file_image")
+        img(:src="imagePreview" height="300px")
+      input(id="file_image" type="file", accept="image/png,image/jpeg,image/gif", @change="uploadImage", style="display:none;" ,required)
     Form(:formValue="formValue")
     button.product-submit(type="submit", @click="handleSubmit") 送信
 </template>
@@ -29,6 +31,13 @@ export default class Default extends Vue {
   /** 商品ID */
   public productId: number = this.product.id
 
+  /**
+   * 選択画像プレビュー(存在しない場合はNoImage)
+   */
+  public imagePreview = this.product.imagePath
+    ? this.$C.ENDPOINT.PRODUCTS_API_URL + this.product.imagePath
+    : 'https://jmva.or.jp/wp-content/uploads/2018/07/noimage.png'
+
   // フォームの値
   public formValue = {
     /** 商品名 */
@@ -49,7 +58,14 @@ export default class Default extends Vue {
       // 画像が存在しない場合
       alert('画像が存在しません')
     }
-    this.formValue.imageData.append('productImage', e.target.files[0])
+    const imageFormDataKey = 'productImage'
+    const selectedImageFile = e.target.files[0]
+    // 画像選択切り替え対策
+    if (this.formValue.imageData.get(imageFormDataKey)) {
+      this.formValue.imageData.delete(imageFormDataKey)
+    }
+    this.formValue.imageData.append(imageFormDataKey, selectedImageFile)
+    this.imagePreview = window.URL.createObjectURL(selectedImageFile)
   }
 
   /** 商品編集メソッド */
