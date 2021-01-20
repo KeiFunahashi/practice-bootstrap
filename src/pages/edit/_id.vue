@@ -77,7 +77,7 @@ export default class Default extends Vue {
         alert(errorRes.data.Error.Message)
       } else if (errorRes.status === 401) {
         alert('認証できませんでした。ログイン画面に進みます。')
-        window.location.href = this.$store.$C.ENDPOINT.API_ENDPOINT
+        window.location.href = this.$C.ENDPOINT.API_ENDPOINT
       } else {
         this.$nuxt.error({ statusCode: 500, message: 'システムエラーです' })
       }
@@ -88,7 +88,7 @@ export default class Default extends Vue {
   /** asyncDataフック */
   public async asyncData(context: Context) {
     // context
-    const { store, route, error } = context
+    const { app, store, route, error } = context
 
     // 商品詳細情報をstoreに保存
     try {
@@ -105,7 +105,7 @@ export default class Default extends Vue {
         error({ statusCode: 400, message: errorRes.data.Error.Message })
       } else if (errorRes.status === 401) {
         alert('認証できませんでした。ログイン画面に進みます。')
-        window.location.href = context.$C.ENDPOINT.API_ENDPOINT
+        window.location.href = app.$C.ENDPOINT.API_ENDPOINT
       } else {
         error({ statusCode: 500, message: 'システムエラーです' })
       }

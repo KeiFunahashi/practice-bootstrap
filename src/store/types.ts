@@ -14,3 +14,9 @@ export interface Product {
   description: string
   imagePath: any
 }
+
+declare module 'vue/types/vue' {
+  interface Vue {
+    $C: any
+  }
+}

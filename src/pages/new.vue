@@ -51,7 +51,7 @@ export default class Default extends Vue {
         alert(errorRes.data.Error.Message)
       } else if (errorRes.status === 401) {
         alert('認証できませんでした。ログイン画面に進みます。')
-        window.location.href = this.$store.$C.ENDPOINT.API_ENDPOINT
+        window.location.href = this.$C.ENDPOINT.API_ENDPOINT
       } else {
         this.$nuxt.error({ statusCode: 500, message: 'システムエラーです' })
       }

@@ -41,7 +41,6 @@ export default class Default extends Vue {
 
   /** 検索ワード */
   public title: string = ''
-  $C: any
 
   /** 商品情報 */
   public get searchProducts() {
@@ -52,7 +51,7 @@ export default class Default extends Vue {
   /** asyncDataフック */
   public async asyncData(context: Context) {
     // context
-    const { store, error } = context
+    const { app, store, error } = context
     // 商品情報取得
     try {
       await store.dispatch('Product/index', {
@@ -64,7 +63,7 @@ export default class Default extends Vue {
         alert(errorRes.data.Error.Message)
       } else if (errorRes.status === 401) {
         alert('認証できませんでした。ログイン画面に進みます。')
-        window.location.href = context.$C.ENDPOINT.API_ENDPOINT
+        window.location.href = app.$C.ENDPOINT.API_ENDPOINT
       } else {
         error({ statusCode: 500, message: 'システムエラーです' })
       }
