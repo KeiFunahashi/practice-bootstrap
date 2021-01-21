@@ -12,7 +12,11 @@
       span トークン認証
   .user ユーザー情報
 </template>
-<script lang="ts"></script>
+<script lang="ts">
+import { Vue } from 'nuxt-property-decorator'
+
+export default class header extends Vue {}
+</script>
 <style>
 .appName a {
   text-decoration: none;
