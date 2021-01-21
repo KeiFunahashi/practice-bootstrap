@@ -5,6 +5,8 @@
     .searchForm
       .productName
         input(v-model="title", type="text", placeholder="商品名",required)
+    .createProduct
+      nuxt-link(to="/new").createProductBtn +
     .searchResults
       .searchResult(v-for="product in searchProducts")
         nuxt-link(:to="`/detail/${product.id}`")
@@ -37,6 +39,20 @@ export default class Default extends Vue {
   text-align: center;
 }
 
+.createProduct {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 58px;
+  .createProductBtn {
+    width: fit-content;
+    font-weight: bold;
+    font-size: 50px;
+    text-decoration: black;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 100px;
+  }
+}
 .searchResults {
   margin: 50px 0;
   a {
