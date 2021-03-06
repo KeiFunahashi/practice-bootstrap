@@ -37,6 +37,8 @@ export default class Default extends Vue {
   public selected: string = ''
   public formatted: string = ''
 
+  // -----------method-----------
+  /** フォーカスアウト時に日付をハイフンつなぎに変更する */
   public toHyphen() {
     this.value = this.value.replace(/[^0-9]/g, '')
     if (new RegExp(/^[0-9]{8}$/).test(this.value)) {
