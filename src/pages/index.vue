@@ -1,34 +1,58 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">nuxt-practice</h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+  <div>
+    <label for="example-input">Choose a date</label>
+    <b-input-group class="mb-3">
+      <b-form-input
+        id="example-input"
+        v-model="value"
+        type="text"
+        placeholder="YYYY-MM-DD"
+        autocomplete="off"
+        @blur="toHyphen"
+      ></b-form-input>
+      <b-input-group-append>
+        <b-form-datepicker
+          v-model="value"
+          button-only
+          right
+          locale="ja"
+          aria-controls="example-input"
+          @context="onContext"
+        ></b-form-datepicker>
+      </b-input-group-append>
+    </b-input-group>
+    <p class="mb-1">Value: '{{ value }}'</p>
+    <p class="mb-1">Selected: '{{ selected }}'</p>
+    <p>Formatted: '{{ formatted }}'</p>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Vue, Component } from 'nuxt-property-decorator'
 
-export default Vue.extend({})
+@Component({})
+export default class Default extends Vue {
+  // -----------Data-----------
+  public value: string = ''
+  public selected: string = ''
+  public formatted: string = ''
+
+  public toHyphen() {
+    this.value = this.value.replace(/[^0-9]/g, '')
+    if (new RegExp(/^[0-9]{8}$/).test(this.value)) {
+      const str = this.value.trim()
+      const y = str.substr(0, 4)
+      const m = str.substr(4, 2)
+      const d = str.substr(6, 2)
+      this.value = y + '-' + m + '-' + d
+    }
+  }
+
+  public onContext(ctx: any) {
+    this.selected = ctx.selectedYMD
+    this.formatted = ctx.selectedFormatted
+  }
+}
 </script>
 
 <style>
